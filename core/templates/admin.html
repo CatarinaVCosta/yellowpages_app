@@ -1,0 +1,132 @@
+{% load bootstrap %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Yellow Pages</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<style>
+    body {
+        background-color: #417690;
+    }
+
+    input, select {
+        margin-bottom: 10px;
+        margin-left: 10px;
+    }
+
+    button-action {
+        margin-bottom: 10px;
+        margin-left: 10px;
+    }
+
+    a, span.current {
+        color: white;
+    }
+
+    div.homepage_button {
+        margin-top: 10px;
+        float: right;
+    }
+</style>
+<body>
+<ol class="breadcrumb">
+    <li><h4>Welcome to the NOT so Yellow Pages!</h4></li>
+    <div class="homepage_button">
+        <a href="{% url 'back_to_homepage' %}"><span class="glyphicon glyphicon-home" style="color:#417690" aria-hidden="true"></span></a>
+    </div>
+</ol>
+
+{% block form %}
+    <div class="container">
+        <div class="panel-group">
+            <div class="panel panel-info">
+                <div class="panel-heading">Create new company</div>
+                <div class="panel-body">
+                    <form class="navbar-form navbar-left" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form }}
+                        <button type="submit" class="btn btn-default">Save</button>
+                        <button type="submit" class="btn btn-default">Reset</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block table %}
+    <div class="container">
+        <div class="panel-group">
+            <div class="panel panel-info">
+                <div class="panel-heading">List / Edit / Delete</div>
+                <div class="panel-body">
+                    {% if companies %}
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Postal Code</th>
+                                <th scope="col">District</th>
+                                <th scope="col">URL</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                            </thead>
+                            {% for company in companies %}
+                                <tbody>
+                                <tr>
+                                    <th scope="row">{{ company.id }}</th>
+                                    <td>{{ company.name }}</td>
+                                    <td>{{ company.phone }}</td>
+                                    <td>{{ company.address }}</td>
+                                    <td>{{ company.postal_code }}</td>
+                                    <td>{{ company.district }}</td>
+                                    <td>{{ company.url }}</td>
+                                    <td>{{ company.category }}</td>
+                                    <td><a href="{% url 'company_update' company.id %}"><span class="glyphicon glyphicon-pencil" style="color:#417690"></span></a></td>
+                                    <form method="POST">
+                                        <td><a href="{% url 'company_delete' company.id %}"><span class="glyphicon glyphicon-trash" style="color:#417690"></span></a></td>
+                                    </form>
+                                </tr>
+                                </tbody>
+                            {% endfor %}
+                        </table>
+                    {% else %}
+                        <p>There are no companies to list.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+<div class="text-center">
+    <div class="pagination">
+            <span class="step-links">
+                {% if companies.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ companies.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ companies.number }} of {{ companies.paginator.num_pages }}.
+                </span>
+
+                {% if companies.has_next %}
+                    <a href="?page={{ companies.next_page_number }}">next</a>
+                    <a href="?page={{ companies.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+    </div>
+</div>
+</body>
+</html>
