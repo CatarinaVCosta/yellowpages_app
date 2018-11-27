@@ -10,7 +10,7 @@ from django.db.models import F
 
 
 def pagination(param, request):
-    paginator = Paginator(param, 3)
+    paginator = Paginator(param, 5)
     page = request.GET.get('page')
 
     return paginator.get_page(page)
@@ -113,11 +113,6 @@ def back_to_homepage(request):
 @login_required
 def back_to_adminpage(request):
     return redirect(admin_list_companies)
-
-
-@login_required
-def reset_form(request):
-    CompanyForm()
 
 
 def save_to_db_nr_searches(companies_list):
