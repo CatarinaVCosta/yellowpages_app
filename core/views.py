@@ -4,6 +4,7 @@ from .forms import CompanyForm
 from .models import Company
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.db.models import F
 
 # Create your views here.
 
@@ -106,7 +107,7 @@ def admin_list_companies(request):
 @login_required
 def back_to_homepage(request):
     logout(request)
-    return redirect(list_companies)
+    return redirect(get_most_searched_categories)
 
 
 @login_required
@@ -120,13 +121,15 @@ def reset_form(request):
 
 
 def save_to_db_nr_searches(companies_list):
-    for company in companies_list.iterator():
-        company.nr_searches += 1
+    for company in companies_list:
+        print('COMPANY ' + str(company.category) + str(company.nr_searches))
+        company.nr_searches = F('nr_searches') + 1
         company.save()
 
 
 def get_most_searched_categories(request):
-    for company in Company.objects.all():
-        most_searched_companies = search_by_category(company.category).order_by('nr_searches')[:2]
+    first_most_searched_company = Company.objects.all().order_by('-nr_searches')[0]
+    second_most_searched_company = Company.objects.all().order_by('-nr_searches')[1]
 
-        return render(request, 'homepage.html', {'most_searched_companies': most_searched_companies})
+    return render(request, 'homepage.html', {'first_most_searched_company': first_most_searched_company,
+                                             'second_most_searched_company': second_most_searched_company})
