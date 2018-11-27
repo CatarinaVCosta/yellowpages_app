@@ -32,32 +32,25 @@
         margin-top: 10px;
         float: right;
     }
+
+    div.new_company_button {
+        font-size: 45px;
+        float: right;
+    }
 </style>
 <body>
 <ol class="breadcrumb">
     <li><h4>Welcome to the NOT so Yellow Pages!</h4></li>
     <div class="homepage_button">
-        <a href="{% url 'back_to_homepage' %}"><span class="glyphicon glyphicon-home" style="color:#417690" aria-hidden="true"></span></a>
+        <a href="{% url 'back_to_homepage' %}"><span class="glyphicon glyphicon-home" style="color:#417690"
+                                                     aria-hidden="true"></span></a>
     </div>
 </ol>
 
-{% block form %}
-    <div class="container">
-        <div class="panel-group">
-            <div class="panel panel-info">
-                <div class="panel-heading">Create new company</div>
-                <div class="panel-body">
-                    <form class="navbar-form navbar-left" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{ form }}
-                        <button type="submit" class="btn btn-default">Save</button>
-                        <button type="submit" class="btn btn-default">Reset</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endblock %}
+<div class="new_company_button">
+    <a href="{% url 'company_create' %}"><span class="glyphicon glyphicon-plus-sign" style="color:white"
+                                                 aria-hidden="true"></span></a>
+</div>
 
 {% block table %}
     <div class="container">
@@ -92,9 +85,11 @@
                                     <td>{{ company.district }}</td>
                                     <td>{{ company.url }}</td>
                                     <td>{{ company.category }}</td>
-                                    <td><a href="{% url 'company_update' company.id %}"><span class="glyphicon glyphicon-pencil" style="color:#417690"></span></a></td>
+                                    <td><a href="{% url 'company_update' company.id %}"><span
+                                            class="glyphicon glyphicon-pencil" style="color:#417690"></span></a></td>
                                     <form method="POST">
-                                        <td><a href="{% url 'company_delete' company.id %}"><span class="glyphicon glyphicon-trash" style="color:#417690"></span></a></td>
+                                        <td><a href="{% url 'company_delete' company.id %}"><span
+                                                class="glyphicon glyphicon-trash" style="color:#417690"></span></a></td>
                                     </form>
                                 </tr>
                                 </tbody>

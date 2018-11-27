@@ -31,7 +31,7 @@ def new_company(request):
         form.save()
         return redirect(admin_list_companies)
 
-    return form
+    return render(request, 'form.html', {'form': form})
 
 
 @login_required

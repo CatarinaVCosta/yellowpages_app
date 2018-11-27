@@ -9,7 +9,7 @@ urlpatterns = [
 
     path('admin/', admin_list_companies, name="company_list"),
     path('admin/back', back_to_homepage, name="back_to_homepage"),
-    # path('admin/new/', new_company, name="company_create"),
+    path('admin/new/', new_company, name="company_create"),
     path('admin/edit/<int:id>/', edit_company, name="company_update"),
     path('admin/reset', reset_form, name="reset_form"),
     path('admin/delete/<int:id>/', delete_company, name="company_delete"),
