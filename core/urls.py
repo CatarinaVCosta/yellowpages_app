@@ -1,10 +1,11 @@
 from django.urls import path
 from .views import list_companies, new_company, edit_company, delete_company, search, admin_list_companies, \
-    back_to_homepage, reset_form, back_to_adminpage
+    back_to_homepage, reset_form, back_to_adminpage, get_most_searched_categories
 
 urlpatterns = [
-    path('', list_companies, name="company_list"),
+    path('list/', list_companies, name="list_companies"),
     path('search/', search, name="search_companies"),
+    path('', get_most_searched_categories, name="get_most_searched_categories"),
     path('adminpage/', back_to_adminpage, name="back_to_adminpage"),
 
     path('admin/', admin_list_companies, name="company_list"),
