@@ -7,7 +7,7 @@
 
 Inside the project directory, open a bash and type:
 
-`docker-compose up --build`
+`docker-compose up`
 
 After this, you should be able to open the web app on your browser:
 
