@@ -20,6 +20,6 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('companies/', include('core.urls')),
+    path('yellowpages/', include('core.urls')),
     path('login/', auth_views.LoginView.as_view(template_name="registration/login.html"), name='login'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

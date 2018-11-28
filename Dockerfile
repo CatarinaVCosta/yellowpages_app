@@ -5,4 +5,5 @@ WORKDIR /app
 ADD . /app
 
 RUN pip install Pillow
+RUN pip install django-bootstrap-form
 RUN pip install Django
